@@ -1,0 +1,58 @@
+USE [DAW]
+GO
+/****** Object:  StoredProcedure [dbo].[PA_COMPROBAR_LOGIN]    Script Date: 13/05/2022 12:12:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[PA_COMPROBAR_LOGIN]
+(  
+	@EMAIL VARCHAR(100),
+	@PASS VARCHAR(100),
+
+  
+ @MENSAJE VARCHAR(100) OUTPUT,  
+ @RETCODE INT OUTPUT  
+)  
+AS  
+  
+BEGIN TRY  
+   
+
+   SET @RETCODE = 0
+   SET @MENSAJE = ''
+   
+ IF ISNULL(@EMAIL,'') = ''  
+ BEGIN  
+  SET  @RETCODE = 10  
+  SET @MENSAJE = 'El parametro email no puede ser vacío'  
+  RETURN  
+ END  
+
+ IF EXISTS(SELECT @EMAIL, @PASS FROM USUARIOS)
+ BEGIN
+	SET @RETCODE = 1
+	SET @MENSAJE = 'Los datos existesn'
+	RETURN 
+ END 
+  
+  
+ INSERT INTO USUARIOS  
+ (  
+	EMAIL,
+	PASS
+ )  
+ VALUES  
+ (  
+	@EMAIL,
+	@PASS
+	 
+ )  
+   
+ RETURN   
+  
+END TRY  
+  
+BEGIN CATCH  
+  
+END CATCH
