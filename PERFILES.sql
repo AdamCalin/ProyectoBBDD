@@ -1,7 +1,7 @@
 USE [DAW]
 GO
 
-/****** Object:  Table [dbo].[PERFILES]    Script Date: 13/05/2022 15:00:20 ******/
+/****** Object:  Table [dbo].[PERFILES]    Script Date: 27/05/2022 14:58:31 ******/
 SET ANSI_NULLS ON
 GO
 

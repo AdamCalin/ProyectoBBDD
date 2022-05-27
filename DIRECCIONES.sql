@@ -1,7 +1,7 @@
 USE [DAW]
 GO
 
-/****** Object:  Table [dbo].[DIRECCIONES]    Script Date: 13/05/2022 14:59:39 ******/
+/****** Object:  Table [dbo].[DIRECCIONES]    Script Date: 27/05/2022 14:57:27 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,14 +11,14 @@ GO
 CREATE TABLE [dbo].[DIRECCIONES](
 	[ID_DIRECCION] [int] IDENTITY(1,1) NOT NULL,
 	[ID_USUARIO] [int] NULL,
-	[CALLE] [varchar](50) NULL,
-	[PROVINCIA] [varchar](50) NULL,
-	[POBLACION] [varchar](50) NULL,
+	[CALLE] [varchar](100) NULL,
+	[PROVINCIA] [varchar](100) NULL,
+	[POBLACION] [varchar](100) NULL,
 	[CODIGO_POSTAL] [int] NULL,
 	[NUMERO] [int] NULL,
 	[PISO] [int] NULL,
 	[PUERTA] [char](1) NULL,
-	[PERSONA_CONTACTO] [varchar](50) NULL,
+	[PERSONA_CONTACTO] [varchar](100) NULL,
 	[TELEFONO] [varchar](12) NULL,
  CONSTRAINT [PK_DIRECCIONES] PRIMARY KEY CLUSTERED 
 (

@@ -1,7 +1,7 @@
 USE [DAW]
 GO
 
-/****** Object:  Table [dbo].[STOCK]    Script Date: 13/05/2022 15:00:27 ******/
+/****** Object:  Table [dbo].[STOCK]    Script Date: 27/05/2022 14:58:39 ******/
 SET ANSI_NULLS ON
 GO
 
