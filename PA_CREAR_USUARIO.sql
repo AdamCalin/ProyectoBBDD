@@ -1,7 +1,7 @@
 USE [DAW]
 GO
 
-/****** Object:  StoredProcedure [dbo].[PA_CREAR_USUARIO]    Script Date: 06/06/2022 16:27:23 ******/
+/****** Object:  StoredProcedure [dbo].[PA_CREAR_USUARIO]    Script Date: 09/06/2022 16:31:39 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -34,7 +34,19 @@ BEGIN TRY
   RETURN  
  END  
 
+   IF EXISTS(SELECT EMAIL FROM USUARIOS WHERE @EMAIL = EMAIL)
+ BEGIN
+	SET @RETCODE = 1
+	SET @MENSAJE = 'Este usuario ya existe'
+	RETURN 
+ END 
   
+ IF EXISTS(SELECT USUARIO FROM USUARIOS WHERE @USUARIO = USUARIO)
+ BEGIN
+	SET @RETCODE = 1
+	SET @MENSAJE = 'Este usuario ya existe'
+	RETURN 
+ END 
   
  INSERT INTO USUARIOS  
  (  
