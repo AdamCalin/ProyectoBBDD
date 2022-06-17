@@ -1,0 +1,111 @@
+USE [DAW]
+GO
+
+/****** Object:  StoredProcedure [dbo].[PA_CREAR_PEDIDO_ARTICULO]    Script Date: 17/06/2022 11:09:36 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[PA_CREAR_PEDIDO_ARTICULO]
+(  
+ @ID_ARTICULO INT,
+ @DESCRIPCION VARCHAR(50),
+ @TALLA CHAR,
+ @COLOR VARCHAR(20),
+ @CANTIDAD INT,
+ @PRECIO DECIMAL,
+ @PRECIO_UND INT,
+
+  
+ @MENSAJE VARCHAR(100) OUTPUT,  
+ @RETCODE INT OUTPUT  
+)  
+AS  
+  
+BEGIN TRY  
+   
+
+   SET @RETCODE = 0
+   SET @MENSAJE = ''
+   
+ IF ISNULL(@ID_ARTICULO,'') = ''  
+ BEGIN  
+  SET  @RETCODE = 10  
+  SET @MENSAJE = 'El parametro id_articulo no puede ser vacío'  
+  RETURN  
+ END  
+  IF ISNULL(@TALLA,'') = ''  
+ BEGIN  
+  SET  @RETCODE = 10  
+  SET @MENSAJE = 'El parametro talla no puede ser vacío'  
+  RETURN  
+ END  
+  IF ISNULL(@COLOR,'') = ''  
+ BEGIN  
+  SET  @RETCODE = 10  
+  SET @MENSAJE = 'El parametro color no puede ser vacío'  
+  RETURN  
+ END  
+  IF ISNULL(@CANTIDAD,0) = 0
+ BEGIN  
+  SET  @RETCODE = 10  
+  SET @MENSAJE = 'El parametro cantidad no puede ser vacío'  
+  RETURN  
+ END  
+
+   IF ISNULL(@DESCRIPCION,'') = ''
+ BEGIN 
+	 SET @DESCRIPCION = (
+	 SELECT DESCRIPCION FROM ARTICULOS WHERE @ID_ARTICULO = ID_ARTICULO
+	 )
+ END
+
+   IF ISNULL(@PRECIO,0) = 0 
+ BEGIN 
+	 SET @PRECIO = (
+	 SELECT PRECIO FROM ARTICULOS WHERE @ID_ARTICULO = ID_ARTICULO
+	 ) * @CANTIDAD
+ END
+ 
+   IF ISNULL(@PRECIO_UND,0) = 0 
+ BEGIN 
+	 SET @PRECIO_UND = @PRECIO / @CANTIDAD
+ END
+
+ 
+ INSERT INTO PEDIDOS_ARTICULOS
+ (  
+	ID_ARTICULO,
+	DESCRIPCION,
+	TALLA,
+	COLOR,
+	CANTIDAD,
+	PRECIO_UNIDAD,
+	PRECIO
+ )  
+ VALUES  
+ (  
+	@ID_ARTICULO,
+	@DESCRIPCION,
+	@TALLA,
+	@COLOR,
+	@CANTIDAD,
+	@PRECIO_UND,
+	@PRECIO
+	 
+ )  
+   
+   SET @RETCODE = 0
+   SET @MENSAJE = 'Pedido creado correctamente'
+
+ RETURN   
+  
+END TRY  
+  
+BEGIN CATCH  
+  
+END CATCH
+GO
+
